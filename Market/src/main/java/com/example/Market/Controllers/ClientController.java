@@ -1,7 +1,9 @@
 package com.example.Market.Controllers;
 
+import com.example.Market.Constants.StringConstants;
 import com.example.Market.Controllers.Services.ClientService;
-import com.example.Market.Model.Client;
+import com.example.Market.Controllers.Services.MailService;
+import com.example.Market.Entity.Client;
 import com.example.Market.Responce.ClientResponce;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -10,9 +12,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
-import java.text.DateFormat;
 import java.text.ParseException;
-import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
 
@@ -27,6 +27,8 @@ public class ClientController {
     @Autowired
     private ClientService clientService;
 
+    @Autowired
+    private MailService mailService;
 
     @GetMapping("/test")
     public String test() {
@@ -45,7 +47,7 @@ public class ClientController {
         }
         String validationToken = RandomString.make(64);
         Client newClient = new Client(Long.parseLong(id), fname, lname, Integer.parseInt(accNumber), mail, validationToken, false);
-//        MailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id));
+//        mailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id),1);
         clientService.save(newClient);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -78,7 +80,15 @@ public class ClientController {
         clientService.save(client);
         return new ResponseEntity(HttpStatus.OK);
     }
-
+    @GetMapping("/requestPassReset")
+    public ResponseEntity requestPasswordReset(@RequestParam(value = "id") String id){
+        Client client = clientService.getClientById(Long.parseLong(id));
+        if (client == null) {
+            return new ResponseEntity(HttpStatus.NOT_FOUND);
+        }
+        mailService.sendMail(client.getMail(), StringConstants.verificationRedirectUrl,Integer.parseInt(id),0);
+        return new ResponseEntity(HttpStatus.OK);
+    }
     @PostMapping("/logout")
     public ResponseEntity login(@RequestParam(value = "id") String id) {
         Client client = clientService.getClientById(Long.parseLong(id));

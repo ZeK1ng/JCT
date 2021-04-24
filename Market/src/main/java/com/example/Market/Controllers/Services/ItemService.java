@@ -1,19 +1,23 @@
 package com.example.Market.Controllers.Services;
 
-import com.example.Market.Model.Client;
-import com.example.Market.Model.Item;
+import com.example.Market.Entity.DBSequence;
+import com.example.Market.Entity.Item;
 
 import com.example.Market.Repository.ClientRepository;
 import com.example.Market.Repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.List;
-
+@Service
 public class ItemService {
     @Autowired
     private ItemRepository itemRep;
     @Autowired
     private ClientRepository clrep;
+
+
+
     public List<Item> getAllItems(){
         return itemRep.findAll();
     }
@@ -29,6 +33,7 @@ public class ItemService {
         }
         return result;
     }
+
     public int deleteByOwnerId(long ownerId) {
         if(clrep.findById(ownerId).isPresent()){
             List<Item> allItems = getAllItems();
@@ -43,6 +48,17 @@ public class ItemService {
     }
     public void addItem(Item item){
         itemRep.save(item);
+    }
+
+    public Item getItemById(int id) {
+        if(itemRep.findById(id).isPresent()){
+            return itemRep.findById(id).get();
+        }
+        return null;
+    }
+
+    public void deleteItem(int id){
+        itemRep.deleteById(id);
     }
 
 }

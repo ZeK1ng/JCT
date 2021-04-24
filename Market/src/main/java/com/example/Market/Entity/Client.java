@@ -1,4 +1,4 @@
-package com.example.Market.Model;
+package com.example.Market.Entity;
 
 
 import org.springframework.data.annotation.Id;

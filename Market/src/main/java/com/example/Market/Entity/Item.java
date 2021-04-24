@@ -1,7 +1,8 @@
-package com.example.Market.Model;
+package com.example.Market.Entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
+
 
 @Document(collection = "Items")
 public class Item {
@@ -14,9 +15,16 @@ public class Item {
     private int amount;
     private long ownerId;
 
-    public int getId() {
-        return id;
+    public Item(int id, String name, double price, String imageUrl, int amount, long ownerId) {
+        this.id = id;
+        this.name = name;
+        this.price = price;
+        this.imageUrl = imageUrl;
+        this.amount = amount;
+        this.ownerId = ownerId;
     }
+
+    public int getId() { return id; }
 
     public void setId(int id) {
         this.id = id;
@@ -26,9 +34,7 @@ public class Item {
         return name;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
+    public void setName(String name) { this.name = name; }
 
     public double getPrice() {
         return price;

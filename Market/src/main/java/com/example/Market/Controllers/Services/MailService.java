@@ -15,7 +15,7 @@ public class MailService {
 
     @Autowired
     private ClientRepository repository;
-    public static void sendMail(String targetMail,String redirectLink,int userId) {
+    public void sendMail(String targetMail,String redirectLink,int userId,int flag) {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth",true);
         prop.put("mail.smtp.starttls.enable",true);
@@ -30,7 +30,7 @@ public class MailService {
                 return new PasswordAuthentication(senderAcc,sendPass);
             }
         });
-        Message message = constructMessage(session,senderAcc,targetMail,redirectLink,userId);
+        Message message = constructMessage(session,senderAcc,targetMail,redirectLink,userId,flag);
         System.out.println("-----SENDING MAIL-------");
         try {
             Transport.send(message);
@@ -41,16 +41,26 @@ public class MailService {
     }
 
 
-    private static Message constructMessage(Session session, String senderAcc,String targetMail,String redirectLink,int userId) {
+    private Message constructMessage(Session session, String senderAcc,String targetMail,String redirectLink,int userId,int flag) {
         try {
             Message message = new MimeMessage(session);
             message.setFrom(new InternetAddress(senderAcc));
             message.setRecipient(Message.RecipientType.TO, new InternetAddress(targetMail));
-            message.setSubject("Please verify your registration");
-            String content = "Dear [[name]],<br>"
-                    + "Please click the link below to verify your registration:<br>"
-                    + "<h3><Ua href=\"[[RL]]\">VERIFY</a></h3>"
-                    + "Thank you";
+            String content ="";
+            if(flag == 1){
+                message.setSubject("Please verify your registration");
+                content= "Dear [[name]],<br>"
+                        + "Please click the link below to verify your registration:<br>"
+                        + "<h3><Ua href=\"[[RL]]\">VERIFY</a></h3>"
+                        + "Thank you";
+            }else{
+                message.setSubject("Reset you password");
+                content= "Dear [[name]],<br>"
+                        + "Please click the link below to reset your password:<br>"
+                        + "<h3><Ua href=\"[[RL]]\">Reset</a></h3>"
+                        + "Thank you";
+            }
+
             redirectLink = redirectLink+"?userid="+userId;
             content = content.replace("[[URL]]", redirectLink);
             message.setText(content);
