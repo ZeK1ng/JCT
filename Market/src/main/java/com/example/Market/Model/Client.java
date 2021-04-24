@@ -4,6 +4,8 @@ package com.example.Market.Model;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.Date;
+
 
 @Document(collection = "Clients")
 public class Client {
@@ -16,8 +18,11 @@ public class Client {
     private String validationToken;
     private String mail;
     private boolean isActive;
+    private boolean loggedIn;
+    private Date loginExparDate;
 
-    public Client(long id, String firstName, String lastName, int account_number,String mail ,String validationToken, boolean isActive) {
+
+    public Client(long id, String firstName, String lastName, int account_number, String mail , String validationToken, boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -25,6 +30,8 @@ public class Client {
         this.validationToken = validationToken;
         this.mail = mail;
         this.isActive = isActive;
+        this.loggedIn = false;
+        this.password= "";
     }
 
     public String getValidationToken() {
@@ -47,13 +54,15 @@ public class Client {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(long id) {
         this.id = id;
     }
 
-    public String getFirstName() {
-        return firstName;
-    }
+    public String getFirstName() { return firstName; }
+
+    public String getMail() { return mail; }
+
+    public void setMail(String mail) { this.mail = mail; }
 
     public void setFirstName(String firstName) {
         this.firstName = firstName;
@@ -82,4 +91,13 @@ public class Client {
     public void setPassword(String password) {
         this.password = password;
     }
+
+    public boolean isLoggedIn() { return loggedIn; }
+
+    public void setLoggedIn(boolean loggedIn) { this.loggedIn = loggedIn; }
+
+    public Date getLoginExparDate() { return loginExparDate; }
+
+    public void setLoginExparDate(Date lastLogDate) { this.loginExparDate = lastLogDate; }
+
 }

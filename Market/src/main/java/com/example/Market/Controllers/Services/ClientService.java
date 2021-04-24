@@ -9,7 +9,7 @@ import org.springframework.stereotype.Service;
 import java.util.List;
 import java.util.Optional;
 @Service
-public class UserService {
+public class ClientService {
     @Autowired
     private ClientRepository rep;
 
@@ -31,6 +31,15 @@ public class UserService {
     }
     public void save(Client client){
         rep.save(client);
+    }
+    public Client findByMailAndPass(String email,String pwd){
+        List<Client> clients = rep.findAll();
+        for(Client client:clients){
+            if(client.getMail().equals(email) && client.getPassword().equals(pwd)){
+                return client;
+            }
+        }
+        return null;
     }
 
 }
