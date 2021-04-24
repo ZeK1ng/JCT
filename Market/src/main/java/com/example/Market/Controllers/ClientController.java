@@ -3,6 +3,7 @@ package com.example.Market.Controllers;
 import com.example.Market.Constants.StringConstants;
 import com.example.Market.Controllers.Services.ClientService;
 import com.example.Market.Controllers.Services.MailService;
+import com.example.Market.Controllers.Services.ReportService;
 import com.example.Market.Entity.Client;
 import com.example.Market.Responce.ClientResponce;
 import net.bytebuddy.utility.RandomString;
@@ -34,6 +35,8 @@ public class ClientController {
     public String test() {
         return "HIIII";
     }
+    @Autowired
+    private ReportService reportService;
 
     @PostMapping("/register/firstPhase")
     public ResponseEntity saveClient(@RequestParam(value = "fname") String fname, @RequestParam(value = "lname") String lname,
