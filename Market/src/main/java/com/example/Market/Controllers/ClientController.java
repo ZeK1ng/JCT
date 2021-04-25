@@ -39,6 +39,7 @@ public class ClientController {
     @Autowired
     private ReportService reportService;
 
+
     @PostMapping("/register/firstPhase")
     public ResponseEntity saveClient(@RequestParam(value = "fname") String fname, @RequestParam(value = "lname") String lname,
                                      @RequestParam(value = "id") String id, @RequestParam(value = "accountNumber") String accNumber,
@@ -129,4 +130,14 @@ public class ClientController {
         return new ResponseEntity(HttpStatus.OK);
     }
 
+    @PostMapping("/userVisiting")
+    public ResponseEntity updateUserVisitReport(){
+        ReportEntity reportEntity = reportService.getReport();
+        if(reportEntity == null){
+            reportService.createEmptyRecord();
+        }
+        reportEntity.setAllVisitedUserCount(reportEntity.getAllVisitedUserCount()+1);
+        reportService.updateReport(reportEntity);
+        return new ResponseEntity(HttpStatus.OK);
+    }
 }
