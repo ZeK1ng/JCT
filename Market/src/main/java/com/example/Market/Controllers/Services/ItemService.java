@@ -56,9 +56,12 @@ public class ItemService {
         }
         return null;
     }
+    public void save(Item item){
+        itemRep.save(item);
+    }
 
-    public void deleteItem(int id){
-        itemRep.deleteById(id);
+    public void deleteItem(Item item){
+        itemRep.delete(item);
     }
 
 }

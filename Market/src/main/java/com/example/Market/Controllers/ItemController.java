@@ -19,6 +19,7 @@ import java.util.List;
 @RequestMapping("/item")
 @SpringBootApplication
 @CrossOrigin(origins = "*")
+
 public class ItemController {
 
 
@@ -65,7 +66,9 @@ public class ItemController {
         double income = amount * item.getPrice();
         item.setAmount(item.getAmount() - amount);
         if(item.getAmount() == 0 ){
-            itemService.deleteItem(id);
+            itemService.deleteItem(item);
+        }else {
+            itemService.save(item);
         }
         long ownerId = item.getOwnerId();
         Client owner = clientService.getClientById(ownerId);
@@ -85,7 +88,7 @@ public class ItemController {
 
     }
 
-    private void transferToOwner(double ownerIncome, int account_number) {
+    private void transferToOwner(double ownerIncome, String account_number) {
         return;
     }
 

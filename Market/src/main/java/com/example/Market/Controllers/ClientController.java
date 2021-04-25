@@ -49,7 +49,7 @@ public class ClientController {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
         String validationToken = RandomString.make(64);
-        Client newClient = new Client(Long.parseLong(id), fname, lname, Integer.parseInt(accNumber), mail, validationToken, false);
+        Client newClient = new Client(Long.parseLong(id), fname, lname, accNumber, mail, validationToken, false);
 //        mailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id),1);
         clientService.save(newClient);
         return new ResponseEntity(HttpStatus.OK);
@@ -87,7 +87,7 @@ public class ClientController {
         }
         reportEntity.addUser(client.getId());
         reportService.updateReport(reportEntity);
-        return new ResponseEntity(HttpStatus.OK);
+        return new ResponseEntity(client.getId(),HttpStatus.OK);
     }
     @GetMapping("/requestPassReset")
     public ResponseEntity requestPasswordReset(@RequestParam(value = "id") String id){

@@ -13,7 +13,7 @@ public class Client {
     private long id;
     private String firstName;
     private String lastName;
-    private int account_number;
+    private String account_number;
     private String password;
     private String validationToken;
     private String mail;
@@ -22,7 +22,7 @@ public class Client {
     private Date loginExparDate;
 
 
-    public Client(long id, String firstName, String lastName, int account_number, String mail , String validationToken, boolean isActive) {
+    public Client(long id, String firstName, String lastName, String account_number, String mail , String validationToken, boolean isActive) {
         this.id = id;
         this.firstName = firstName;
         this.lastName = lastName;
@@ -76,11 +76,11 @@ public class Client {
         this.lastName = lastName;
     }
 
-    public int getAccount_number() {
+    public String getAccount_number() {
         return account_number;
     }
 
-    public void setAccount_number(int account_number) {
+    public void setAccount_number(String account_number) {
         this.account_number = account_number;
     }
 
