@@ -1,4 +1,5 @@
 package com.example.Market.Controllers.Services;
+import com.example.Market.Constants.StringConstants;
 import com.example.Market.Repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -15,14 +16,15 @@ public class MailService {
 
     @Autowired
     private ClientRepository repository;
+
     public void sendMail(String targetMail,String redirectLink,int userId,int flag) {
         Properties prop = new Properties();
         prop.put("mail.smtp.auth",true);
         prop.put("mail.smtp.starttls.enable",true);
         prop.put("mail.smtp.host","smtp.gmail.com");
         prop.put("mail.smtp.port","587");
-        String senderAcc = "dgogi17@freeuni.edu.ge";
-        String sendPass = "charxali2019";
+        String senderAcc = StringConstants.MAIL;
+        String sendPass = StringConstants.MAILPWD;
         Session session = Session.getInstance(prop, new Authenticator() {
             @Override
             protected PasswordAuthentication getPasswordAuthentication() {

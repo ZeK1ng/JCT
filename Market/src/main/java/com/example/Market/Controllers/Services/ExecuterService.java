@@ -35,6 +35,8 @@ public class ExecuterService {
             @Override
             public void run() {
                 GenerateExcelReport();
+                reportService.deleteRecord();
+                reportService.createEmptyRecord();
                 runJob(targetHour,targetMin,targetSec);
             }
         };

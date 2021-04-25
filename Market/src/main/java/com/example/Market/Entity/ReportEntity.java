@@ -14,7 +14,7 @@ public class ReportEntity {
     private int id;
     private int soldItemsAmount;
     private double soldSumAmount;
-    private double commissionAmmount;
+    private double commissionAmount;
     private int allVisitedUserCount;
     private List<Pair<Item,Client>> soldItems;
     private Set<Long> uniqueUsers;
@@ -45,9 +45,9 @@ public class ReportEntity {
         this.soldSumAmount = soldSumAmount;
     }
 
-    public double getCommissionAmount() { return commissionAmmount; }
+    public double getCommissionAmount() { return commissionAmount; }
 
-    public void setCommisionAmmount(double commisionAmmount) { this.commissionAmmount = commisionAmmount; }
+    public void setCommisionAmount(double commisionAmmount) { this.commissionAmount = commisionAmmount; }
 
     public int getUniqueItemCount() {
         if(uniqueSoldItems == null) return 0;
@@ -86,5 +86,21 @@ public class ReportEntity {
             this.uniqueSoldItems = new HashSet<>();
         }
         this.uniqueSoldItems.add(name);
+    }
+
+    public void addSoldItem(Item item,Client client){
+        Pair<Item,Client> p = new Pair<>(item,client);
+        soldItems.add(p);
+    }
+    public void addUniqueSoldItem(String name){
+        uniqueSoldItems.add(name);
+    }
+
+    public void setUniqueUsers(Set<Long> uniqueUsers) {
+        this.uniqueUsers = uniqueUsers;
+    }
+
+    public void setUniqueSoldItems(Set<String> uniqueSoldItems) {
+        this.uniqueSoldItems = uniqueSoldItems;
     }
 }

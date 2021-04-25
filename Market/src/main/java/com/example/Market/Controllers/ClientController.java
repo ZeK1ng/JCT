@@ -5,6 +5,7 @@ import com.example.Market.Controllers.Services.ClientService;
 import com.example.Market.Controllers.Services.MailService;
 import com.example.Market.Controllers.Services.ReportService;
 import com.example.Market.Entity.Client;
+import com.example.Market.Entity.ReportEntity;
 import com.example.Market.Responce.ClientResponce;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,9 +43,7 @@ public class ClientController {
     public ResponseEntity saveClient(@RequestParam(value = "fname") String fname, @RequestParam(value = "lname") String lname,
                                      @RequestParam(value = "id") String id, @RequestParam(value = "accountNumber") String accNumber,
                                      @RequestParam(value = "email") String mail) {
-//        if (rep.findById(Long.parseLong(id)).isPresent()){
-//            return new ResponseEntity(HttpStatus.CONFLICT);
-//        }
+
         if (clientService.getClientById(Long.parseLong(id)) != null) {
             return new ResponseEntity(HttpStatus.CONFLICT);
         }
@@ -81,6 +80,12 @@ public class ClientController {
         client.setLoginExparDate(expDate);
         client.setLoggedIn(true);
         clientService.save(client);
+        ReportEntity reportEntity = reportService.getReport();
+        if(reportEntity == null){
+            reportService.createEmptyRecord();
+        }
+        reportEntity.addUser(client.getId());
+        reportService.updateReport(reportEntity);
         return new ResponseEntity(HttpStatus.OK);
     }
     @GetMapping("/requestPassReset")
