@@ -4,6 +4,7 @@ import javafx.util.Pair;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 
+import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
@@ -13,33 +14,12 @@ public class ReportEntity {
     private int id;
     private int soldItemsAmount;
     private double soldSumAmount;
-    private double commisionAmmount;
-    private int uniqueItemCount;
-    private int uniqueLoggedUserCount;
-    private int allUserCount;
+    private double commissionAmmount;
+    private int allVisitedUserCount;
     private List<Pair<Item,Client>> soldItems;
     private Set<Long> uniqueUsers;
+    private Set<String> uniqueSoldItems;
 
-    public ReportEntity(int id, int soldItemsAmount, double soldSumAmount, double commisionAmmount, int uniqueItemCount, int uniqueLoggedUserCount, int allUserCount) {
-        this.id = id;
-        this.soldItemsAmount = soldItemsAmount;
-        this.soldSumAmount = soldSumAmount;
-        this.commisionAmmount = commisionAmmount;
-        this.uniqueItemCount = uniqueItemCount;
-        this.uniqueLoggedUserCount = uniqueLoggedUserCount;
-        this.allUserCount = allUserCount;
-    }
-
-    public ReportEntity(int id, int soldItemsAmount, double soldSumAmount, double commisionAmmount, int uniqueItemCount, int uniqueLoggedUserCount, int allUserCount, List<Pair<Item, Client>> soldItems) {
-        this.id = id;
-        this.soldItemsAmount = soldItemsAmount;
-        this.soldSumAmount = soldSumAmount;
-        this.commisionAmmount = commisionAmmount;
-        this.uniqueItemCount = uniqueItemCount;
-        this.uniqueLoggedUserCount = uniqueLoggedUserCount;
-        this.allUserCount = allUserCount;
-        this.soldItems = soldItems;
-    }
 
     public int getId() {
         return id;
@@ -65,36 +45,27 @@ public class ReportEntity {
         this.soldSumAmount = soldSumAmount;
     }
 
-    public double getCommisionAmmount() {
-        return commisionAmmount;
-    }
+    public double getCommissionAmount() { return commissionAmmount; }
 
-    public void setCommisionAmmount(double commisionAmmount) {
-        this.commisionAmmount = commisionAmmount;
-    }
+    public void setCommisionAmmount(double commisionAmmount) { this.commissionAmmount = commisionAmmount; }
 
     public int getUniqueItemCount() {
-        return uniqueItemCount;
-    }
-
-    public void setUniqueItemCount(int uniqueItemCount) {
-        this.uniqueItemCount = uniqueItemCount;
+        if(uniqueSoldItems == null) return 0;
+        return uniqueSoldItems.size();
     }
 
     public int getUniqueLoggedUserCount() {
-        return uniqueLoggedUserCount;
+        if(uniqueUsers == null) return 0;
+        return uniqueUsers.size();
     }
 
-    public void setUniqueLoggedUserCount(int uniqueLoggedUserCount) {
-        this.uniqueLoggedUserCount = uniqueLoggedUserCount;
+    public int getAllVisitedUserCount() {
+        return allVisitedUserCount;
     }
 
-    public int getAllUserCount() {
-        return allUserCount;
-    }
 
-    public void setAllUserCount(int allUserCount) {
-        this.allUserCount = allUserCount;
+    public void setAllVisitedUserCount(int allUserCount) {
+        this.allVisitedUserCount = allUserCount;
     }
 
     public List<Pair<Item, Client>> getSoldItems() {
@@ -103,5 +74,17 @@ public class ReportEntity {
 
     public void setSoldItems(List<Pair<Item, Client>> soldItems) {
         this.soldItems = soldItems;
+    }
+    public void addUser(long id){
+        if(this.uniqueUsers == null){
+            this.uniqueUsers = new HashSet<>();
+        }
+        this.uniqueUsers.add(id);
+    }
+    public void addItem(String name){
+        if(this.uniqueSoldItems == null){
+            this.uniqueSoldItems = new HashSet<>();
+        }
+        this.uniqueSoldItems.add(name);
     }
 }

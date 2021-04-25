@@ -19,12 +19,15 @@ public class ReportService {
 
     @Autowired
     private ItemService itemService;
-
+    private int id = 1;
     public void updateReport(ReportEntity reportEntity){
         reportRepository.save(reportEntity);
     }
-    public ReportEntity getReport(int id){
-        
-        return reportRepository.findById(id).get();
+
+    public ReportEntity getReport(){
+        if(reportRepository.findById(id).isPresent()){
+            return reportRepository.findById(id).get();
+        }
+        return null;
     }
 }
