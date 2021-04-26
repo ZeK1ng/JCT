@@ -1,4 +1,4 @@
-package com.example.Market.Responce;
+package com.example.Market.responce;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

@@ -1,4 +1,4 @@
-package com.example.Market.Constants;
+package com.example.Market.constants;
 
 public class StringConstants {
     public static final String verificationRedirectUrl = "127.0.0.1:5500/html/verify.html";

@@ -1,13 +1,10 @@
 package com.example.Market;
 
-import com.example.Market.Controllers.Services.ExecuterService;
-import com.example.Market.Controllers.Services.ReportService;
+import com.example.Market.service.ExecuterService;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
-import org.springframework.web.bind.annotation.CrossOrigin;
 
 @SpringBootApplication
-@CrossOrigin(origins = "*")
 public class MarketApplication {
 
 	private static ExecuterService executerService = new ExecuterService();

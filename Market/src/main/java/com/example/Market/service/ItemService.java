@@ -1,22 +1,24 @@
-package com.example.Market.Controllers.Services;
+package com.example.Market.service;
 
-import com.example.Market.Entity.DBSequence;
 import com.example.Market.Entity.Item;
-
-import com.example.Market.Repository.ClientRepository;
-import com.example.Market.Repository.ItemRepository;
+import com.example.Market.repository.ClientRepository;
+import com.example.Market.repository.ItemRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
 @Service
 public class ItemService {
-    @Autowired
-    private ItemRepository itemRep;
-    @Autowired
-    private ClientRepository clrep;
 
+    private final ItemRepository itemRep;
 
+    private final ClientRepository clrep;
+
+    @Autowired
+    public ItemService(ItemRepository itemRep,ClientRepository clrep){
+        this.itemRep=itemRep;
+        this.clrep=clrep;
+    }
 
     public List<Item> getAllItems(){
         return itemRep.findAll();

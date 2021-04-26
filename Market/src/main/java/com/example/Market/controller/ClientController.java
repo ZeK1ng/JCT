@@ -1,15 +1,14 @@
-package com.example.Market.Controllers;
+package com.example.Market.controller;
 
-import com.example.Market.Constants.StringConstants;
-import com.example.Market.Controllers.Services.ClientService;
-import com.example.Market.Controllers.Services.MailService;
-import com.example.Market.Controllers.Services.ReportService;
+import com.example.Market.constants.StringConstants;
+import com.example.Market.service.ClientService;
+import com.example.Market.service.MailService;
+import com.example.Market.service.ReportService;
 import com.example.Market.Entity.Client;
 import com.example.Market.Entity.ReportEntity;
-import com.example.Market.Responce.ClientResponce;
+import com.example.Market.responce.ClientResponce;
 import net.bytebuddy.utility.RandomString;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.autoconfigure.SpringBootApplication;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -21,24 +20,25 @@ import java.util.Date;
 
 @RestController
 @RequestMapping("/client")
-@SpringBootApplication
-@CrossOrigin(origins = "*")
 public class ClientController {
 
 
-    @Autowired
-    private ClientService clientService;
+    private final ClientService clientService;
+    private final MailService mailService;
+    private final ReportService reportService;
+
 
     @Autowired
-    private MailService mailService;
+    public ClientController(MailService mailService, ReportService reportService, ClientService clientService) {
+        this.mailService = mailService;
+        this.reportService = reportService;
+        this.clientService = clientService;
+    }
 
     @GetMapping("/test")
     public String test() {
         return "HIIII";
     }
-    @Autowired
-    private ReportService reportService;
-
 
     @PostMapping("/register/firstPhase")
     public ResponseEntity saveClient(@RequestParam(value = "fname") String fname, @RequestParam(value = "lname") String lname,
@@ -50,7 +50,7 @@ public class ClientController {
         }
         String validationToken = RandomString.make(64);
         Client newClient = new Client(Long.parseLong(id), fname, lname, accNumber, mail, validationToken, false);
-        mailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id),1);
+        mailService.sendMail(mail, StringConstants.verificationRedirectUrl, Integer.parseInt(id), 1);
         clientService.save(newClient);
         return new ResponseEntity(HttpStatus.OK);
     }
@@ -71,10 +71,10 @@ public class ClientController {
     public ResponseEntity login(@RequestParam(value = "email") String mail, @RequestParam(value = "password") String pwd) throws ParseException {
         Client client = clientService.findByMailAndPass(mail, pwd);
         if (client == null) {
-            return new ResponseEntity(404,HttpStatus.NOT_FOUND);
+            return new ResponseEntity(404, HttpStatus.NOT_FOUND);
         }
-        if(!client.isActive()){
-            return new ResponseEntity(404,HttpStatus.NOT_FOUND);
+        if (!client.isActive()) {
+            return new ResponseEntity(404, HttpStatus.NOT_FOUND);
         }
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();
@@ -85,22 +85,24 @@ public class ClientController {
         client.setLoggedIn(true);
         clientService.save(client);
         ReportEntity reportEntity = reportService.getReport();
-        if(reportEntity == null){
+        if (reportEntity == null) {
             reportService.createEmptyRecord();
         }
         reportEntity.addUser(client.getId());
         reportService.updateReport(reportEntity);
-        return new ResponseEntity(client.getId(),HttpStatus.OK);
+        return new ResponseEntity(client.getId(), HttpStatus.OK);
     }
+
     @GetMapping("/requestPassReset")
-    public ResponseEntity requestPasswordReset(@RequestParam(value = "id") String id){
+    public ResponseEntity requestPasswordReset(@RequestParam(value = "id") String id) {
         Client client = clientService.getClientById(Long.parseLong(id));
         if (client == null) {
             return new ResponseEntity(HttpStatus.NOT_FOUND);
         }
-        mailService.sendMail(client.getMail(), StringConstants.verificationRedirectUrl,Integer.parseInt(id),0);
+        mailService.sendMail(client.getMail(), StringConstants.verificationRedirectUrl, Integer.parseInt(id), 0);
         return new ResponseEntity(HttpStatus.OK);
     }
+
     @PostMapping("/logout")
     public ResponseEntity login(@RequestParam(value = "id") String id) {
         Client client = clientService.getClientById(Long.parseLong(id));
@@ -134,12 +136,12 @@ public class ClientController {
     }
 
     @PostMapping("/userVisiting")
-    public ResponseEntity updateUserVisitReport(){
+    public ResponseEntity updateUserVisitReport() {
         ReportEntity reportEntity = reportService.getReport();
-        if(reportEntity == null){
+        if (reportEntity == null) {
             reportService.createEmptyRecord();
         }
-        reportEntity.setAllVisitedUserCount(reportEntity.getAllVisitedUserCount()+1);
+        reportEntity.setAllVisitedUserCount(reportEntity.getAllVisitedUserCount() + 1);
         reportService.updateReport(reportEntity);
         return new ResponseEntity(HttpStatus.OK);
     }

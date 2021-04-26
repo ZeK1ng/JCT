@@ -1,7 +1,7 @@
-package com.example.Market.Controllers.Services;
+package com.example.Market.service;
 
 import com.example.Market.Entity.Client;
-import com.example.Market.Repository.ClientRepository;
+import com.example.Market.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -9,8 +9,12 @@ import java.util.List;
 
 @Service
 public class ClientService {
+    private final ClientRepository rep;
+
     @Autowired
-    private ClientRepository rep;
+    public ClientService(ClientRepository rep){
+        this.rep=rep;
+    }
 
     public List<Client> getAllClients(){
         return rep.findAll();
