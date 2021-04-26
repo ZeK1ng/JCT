@@ -73,10 +73,12 @@ function initiateItemBuy(){
     xhr.send()
     console.log(itemId,itemAmount);
 } 
+
 document.getElementById("addItem").addEventListener('click',openAddButton);
 function openAddButton(){
     document.getElementById("modal1").style.display='block'
 }
+
 document.getElementById("addButton").addEventListener('click',callAddService);
 function callAddService(){
     const params = new URLSearchParams(window.location.search);
