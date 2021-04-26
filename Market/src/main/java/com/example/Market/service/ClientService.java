@@ -4,6 +4,7 @@ import com.example.Market.Entity.Client;
 import com.example.Market.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
 
@@ -15,6 +16,12 @@ public class ClientService {
     public ClientService(ClientRepository rep){
         this.rep=rep;
     }
+
+    @Transactional
+    public void save(Client client){
+        rep.save(client);
+    }
+
 
     public List<Client> getAllClients(){
         return rep.findAll();
@@ -32,9 +39,7 @@ public class ClientService {
         }
         return 0;
     }
-    public void save(Client client){
-        rep.save(client);
-    }
+
     public Client findByMailAndPass(String email,String pwd){
         List<Client> clients = rep.findAll();
         for(Client client:clients){

@@ -5,6 +5,7 @@ import com.example.Market.Entity.ReportEntity;
 import com.example.Market.repository.ReportRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.ArrayList;
 import java.util.HashSet;
@@ -21,7 +22,7 @@ public class ReportService {
         this.reportRepository = reportRepository;
 
     }
-
+    @Transactional
     public void updateReport(ReportEntity reportEntity) {
         reportRepository.save(reportEntity);
     }
@@ -33,7 +34,7 @@ public class ReportService {
         }
         return null;
     }
-
+    @Transactional
     public void deleteRecord() {
         reportRepository.deleteAll();
     }
@@ -47,6 +48,6 @@ public class ReportService {
         reportEntity.setSoldSumAmount(0.0);
         reportEntity.setUniqueUsers(new HashSet<>());
         reportEntity.setUniqueSoldItems(new HashSet<>());
-        reportRepository.save(reportEntity);
+        updateReport(reportEntity);
     }
 }
