@@ -71,7 +71,10 @@ public class ClientController {
     public ResponseEntity login(@RequestParam(value = "email") String mail, @RequestParam(value = "password") String pwd) throws ParseException {
         Client client = clientService.findByMailAndPass(mail, pwd);
         if (client == null) {
-            return new ResponseEntity(HttpStatus.NOT_FOUND);
+            return new ResponseEntity(404,HttpStatus.NOT_FOUND);
+        }
+        if(!client.isActive()){
+            return new ResponseEntity(404,HttpStatus.NOT_FOUND);
         }
         Date date = new Date();
         Calendar calendar = Calendar.getInstance();

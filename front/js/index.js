@@ -102,11 +102,12 @@ document.getElementById('LogIn').addEventListener('click', login);
                 const data = xhr.response;
                 console.log(data);
                 if(data!=null){
-                    if(data.status == 404){
+                    if(data == 404){
                         alert("USER NOT FOUND");
+                    }else{
+                        window.location.href = 'userPage.html?id='+data
                     }
                 }
-                window.location.href = 'userPage.html?id='+data
             }
             xhr.send()
         }
