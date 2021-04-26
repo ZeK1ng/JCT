@@ -50,7 +50,7 @@ public class ClientController {
         }
         String validationToken = RandomString.make(64);
         Client newClient = new Client(Long.parseLong(id), fname, lname, accNumber, mail, validationToken, false);
-//        mailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id),1);
+        mailService.sendMail(mail, StringConstants.verificationRedirectUrl,Integer.parseInt(id),1);
         clientService.save(newClient);
         return new ResponseEntity(HttpStatus.OK);
     }

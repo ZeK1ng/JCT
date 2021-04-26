@@ -25,7 +25,15 @@ function signUp(){
         }
     });
     if(allGood){
-        
+        const xhr = new XMLHttpRequest();
+        let requestUrl = 'http://127.0.0.1:8080/client/register/firstPhase?fname='+fname+"&lname="+lname+"&id="+id+"&accountNumber="+acc_number+"&email="+email;
+        xhr.open('POST',requestUrl)
+        xhr.responseType = 'json'
+        xhr.onload = () => {
+            document.getElementById("verifText").style.display ='block';
+        }
+        xhr.send()
+
     }else{
         console.log("NNN")
     }

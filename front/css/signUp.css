@@ -1,0 +1,14 @@
+*{
+    margin: 10;
+    padding: 10;
+    box-sizing:border-box;
+}
+.container{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+}
+
+.verifText{
+    display: none;
+}

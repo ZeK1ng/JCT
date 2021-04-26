@@ -53,19 +53,20 @@ public class MailService {
                 message.setSubject("Please verify your registration");
                 content= "Dear [[name]],<br>"
                         + "Please click the link below to verify your registration:<br>"
-                        + "<h3><Ua href=\"[[RL]]\">VERIFY</a></h3>"
+                        + "<h3><a href=\"[[URL]]\">[[URL]]</a></h3>"
                         + "Thank you";
             }else{
                 message.setSubject("Reset you password");
                 content= "Dear [[name]],<br>"
                         + "Please click the link below to reset your password:<br>"
-                        + "<h3><Ua href=\"[[RL]]\">Reset</a></h3>"
+                        + "<h3><a href=\"[[URL]]\">[[URL]]</a></h3>"
                         + "Thank you";
             }
 
             redirectLink = redirectLink+"?userid="+userId;
             content = content.replace("[[URL]]", redirectLink);
-            message.setText(content);
+            message.setContent(content,"text/html");
+//            message.setText(content);
             return message;
         } catch (Exception ex) {
             System.out.println("-----Error Sending Mail-----");

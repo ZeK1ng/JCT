@@ -73,46 +73,57 @@ function initiateItemBuy(){
     xhr.send()
     console.log(itemId,itemAmount);
 } 
+document.getElementById("addItem").addEventListener('click',openAddButton);
+function openAddButton(){
+    document.getElementById("modal1").style.display='block'
+}
+document.getElementById("addButton").addEventListener('click',callAddService);
+function callAddService(){
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const imageUrl = document.getElementById('itemImage').value;
+    const name = document.getElementById('itemName').value
+    const amount = document.getElementById('itemAmount').value
+    const price  = document.getElementById('itemPrice').value
+    const xhr = new XMLHttpRequest();
+    let requestUrl = 'http://127.0.0.1:8080/item/addItem?ownerId='+id+'&name='+name+'&price='+price+'&amount='+amount + '&imageUrl='+imageUrl;
+    xhr.open('POST',requestUrl)
+    xhr.responseType = 'json'
+    xhr.onload = () => {
+        showData();
+        closeModal1();
+        clearInputs();
+    }
+    xhr.send()
+}
+function clearInputs(){
+    document.getElementById('itemImage').value ="";
+    document.getElementById('itemName').value =""
+    document.getElementById('itemAmount').value=""
+    document.getElementById('itemPrice').value=""
+}
 
+
+document.getElementById("closeButton1").addEventListener('click', closeModal1);
+function closeModal1(){
+    document.getElementById("modal1").style.display='none'
+
+}
 document.getElementById("closeButton").addEventListener('click', closeModal);
 function closeModal(){
     document.getElementById("modal").style.display='none'
+
 }
-
-document.getElementById('LogIn').addEventListener('click', login);
-    document.addEventListener('keypress', function(e){
-        if(e.key === 'Enter'){
-            login()
-        }
-    });
-    function login(){
-        const email = document.getElementById("emailHolder").value;
-        // აქ პასვორდის დაჰეშვა და რაღაცეები შეიძლება, მაგრამ ამ ეტაპზე ჩავთვალოთ რომ დაცულია .
-        const pwd = document.getElementById("passwordHolder").value;
-        if(email.length == 0 || pwd.length==0){
-            document.getElementById("emailHolder").style.borderColor='red';
-            document.getElementById("passwordHolder").style.borderColor='red';
-        }else{
-            const xhr = new XMLHttpRequest();
-            const requestUrl = 'http://127.0.0.1:8080/client/login?email='+email +"&password="+pwd;
-            xhr.open('POST',requestUrl);
-            xhr.responseType = 'json'
-        
-            xhr.onload = () => {
-                const data = xhr.response;
-                console.log(data);
-                if(data!=null){
-                    if(data.status == 404){
-                        alert("USER NOT FOUND");
-                    }
-                }
-                window.location.href = 'userPage.html?id='+data
-            }
-            xhr.send()
-        }
-     
+document.getElementById("logout").addEventListener('click', logout);
+function logout(){
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const xhr = new XMLHttpRequest();
+    let requestUrl = 'http://127.0.0.1:8080/client/logout?id='+id;
+    xhr.open('POST',requestUrl)
+    xhr.responseType = 'json'
+    xhr.onload = () => {
+       window.location.href="index.html";
     }
-
-document.getElementById('signUp').addEventListener('click' ,function(){
-    window.location.href = 'signup.html'
-});
+    xhr.send()
+}

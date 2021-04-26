@@ -6,8 +6,8 @@
     <!-- <meta name="viewport" content="width=device-width, initial-scale=1.0"> -->
     <title>Document</title>
     <!-- <link rel="stylesheet" href="style.css"> -->
-    <link rel="stylesheet" href="/css/index.css">
-    <script type ="module" src="/js/index.js"></script> 
+    <link rel="stylesheet" href="/css/userPage.css">
+    <script type ="module" src="/js/userPage.js"></script> 
 </head>
 </body>
     <div class="container">
@@ -17,10 +17,20 @@
             <input type ="password" id="passwordHolder" class="linput" placeholder="Password">
             <button id ="LogIn" class="lButton">Log In </button>
             <button id="signUp" class = "lButton">Sign up</button> -->
-            <button id="signUp" class = "lButton">logout</button> -->
+            <button id="logout" class = "lButton">logout</button>
             <button id="addItem" class="lButton">AddItem</button>
         </div>
-       
+        <div class="modal" id ="modal1">
+            <div class="modcont"></div>
+                <span class="close" id="closeButton1">&times;</span>
+                <h4>Add Item</h4>
+                <input type ="text" id="itemImage" class="minput" placeholder="ImageUrl">
+                <input type ="text" id="itemName" class="minput" placeholder="Name">
+                <input type ="number" id="itemAmount" class="minput" placeholder="Amount" min="0">
+                <input type ="number" id="itemPrice" class="minput" placeholder="Price" min="0" " step = "0.01" >
+                <button id="addButton" class="mbutton">Add</button>
+            </div>
+        </div>
 
         <div class="items" id="items">
             <h3>Products</h3>
