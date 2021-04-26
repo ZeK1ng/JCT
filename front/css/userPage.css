@@ -13,7 +13,10 @@
     flex-direction: column;
     justify-content: center;
     margin-top: 100px;
+    background-color: #f2682b;
+    max-width: 400px;
 }
+
 .loginform{
     max-width: 100px;
 }
@@ -48,10 +51,10 @@
     display: none; /* Hidden by default */
     position: fixed; /* Stay in place */
     z-index: 1; /* Sit on top */
-    left: 30%;
+    left: 35%;
     top: 30%;
-    max-width: 200px;
-    max-height: 200px;
+    max-width: 400px;
+    max-height: 400px;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
     overflow: auto; /* Enable scroll if needed */
@@ -70,7 +73,7 @@
   
   /* The Close Button */
   .close {
-    color: #aaa;
+    color: red;
     float: right;
     font-size: 28px;
     font-weight: bold;

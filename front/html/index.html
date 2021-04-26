@@ -17,17 +17,29 @@
             <input type ="password" id="passwordHolder" class="linput" placeholder="Password">
             <button id ="LogIn" class="lButton">Log In </button>
             <button id="signUp" class = "lButton">Sign up</button>
+            <button id="resetPwd" class="lButton">Forgot Password?</button>
         </div>
-       
+        <div class="modal" id ="modal1">
+            <span class="close" id="closeButton1">&times;</span>
 
-        <div class="items" id="items">
-            <h3>Products</h3>
-        </div>
-        <div class= "modal" id ="modal">
             <div class="modcont">
-                <span class="close" id="closeButton">&times;</span>
+                <input type="text" id="idNumberInp" class="minput"  placeholder="ID number">
+                <button id="resetButtonNext" class ="button">Next</button>
+                <span id="mailText" class="mailText">Password Reset Link was sent to your email</span>
+            </div>
+        </div>
+        <div class= "Products">
+            <h3>Products</h3>
+            <div class="items" id="items">
+            </div>
+        </div>
+        
+        <div class= "modal" id ="modal">
+            <span class="close" id="closeButton">&times;</span>
+
+            <div class="modcont">
                 <input type="text" id="accNumber" class="minput"  placeholder="account number">
-                <input type ="number" id="amountInput" class="minput" placeholder="amount" min="0">
+                <input type ="number" id="amountInput" class="minput" placeholder="amount" min="1">
                 <button id = "buybutton" class="mbutton">Buy</button>
             </div>
             

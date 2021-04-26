@@ -7,8 +7,20 @@
     display: flex;
     justify-content: center;
     flex-direction: column;
+    align-items: center;
 }
-
+.inputs{
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    max-width: 400px;
+}
+.input{
+    margin-top: 10px;
+}
+.button{
+    margin-top: 10px;
+}
 .verifText{
     display: none;
 }

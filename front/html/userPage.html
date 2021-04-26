@@ -11,19 +11,20 @@
 </head>
 </body>
     <div class="container">
-        <H2>Log In</H2>
+        <H2 id ="userName"></H2>
         <div class="loginform">
             <!-- <input type="text" id="emailHolder" class="linput" placeholder="email">
             <input type ="password" id="passwordHolder" class="linput" placeholder="Password">
             <button id ="LogIn" class="lButton">Log In </button>
             <button id="signUp" class = "lButton">Sign up</button> -->
-            <button id="logout" class = "lButton">logout</button>
             <button id="addItem" class="lButton">AddItem</button>
+            <button id="logout" class = "lButton">logout</button>
         </div>
         <div class="modal" id ="modal1">
-            <div class="modcont"></div>
-                <span class="close" id="closeButton1">&times;</span>
-                <h4>Add Item</h4>
+            <span class="close" id="closeButton1">&times;</span>
+
+            <div class="modcont">
+                <h4 style="color:orange">Add Item</h4>
                 <input type ="text" id="itemImage" class="minput" placeholder="ImageUrl">
                 <input type ="text" id="itemName" class="minput" placeholder="Name">
                 <input type ="number" id="itemAmount" class="minput" placeholder="Amount" min="0">
@@ -31,15 +32,15 @@
                 <button id="addButton" class="mbutton">Add</button>
             </div>
         </div>
-
+        <h3 style="margin-top: 50px;">Products</h3>
         <div class="items" id="items">
-            <h3>Products</h3>
         </div>
         <div class= "modal" id ="modal">
+            <span class="close" id="closeButton">&times;</span>
+
             <div class="modcont">
-                <span class="close" id="closeButton">&times;</span>
                 <input type="text" id="accNumber" class="minput"  placeholder="account number">
-                <input type ="number" id="amountInput" class="minput" placeholder="amount" min="0">
+                <input type ="number" id="amountInput" class="minput" placeholder="amount" min="1">
                 <button id = "buybutton" class="mbutton">Buy</button>
             </div>
             

@@ -30,7 +30,7 @@ function showData(){
             div.appendChild(name);
             const price = document.createElement("span");
             price.className ="item-price";
-            price.innerHTML=item.price;
+            price.innerHTML=item.price+" ₾";
             div.appendChild(price);
             const popupOpener = document.createElement("input");
             popupOpener.className = "button";
@@ -62,17 +62,46 @@ function initiateItemBuy(){
    
     let itemId=  document.getElementById("buybutton").getAttribute('itemId');
     let itemAmount = document.getElementById("amountInput").value;
-    const xhr = new XMLHttpRequest();
-    let requestUrl = 'http://127.0.0.1:8080/item/sellItem?id='+itemId +"&amount="+itemAmount;
-    xhr.open('POST',requestUrl)
-    xhr.responseType = 'json'
-    xhr.onload = () => {
-        showData();
-        closeModal();
+    if(itemAmount.length!=""){
+        const xhr = new XMLHttpRequest();
+        let requestUrl = 'http://127.0.0.1:8080/item/sellItem?id='+itemId +"&amount="+itemAmount;
+        xhr.open('POST',requestUrl)
+        xhr.responseType = 'json'
+        xhr.onload = () => {
+            showData();
+            closeModal();
+        }
+        xhr.send()
     }
-    xhr.send()
     console.log(itemId,itemAmount);
+
+    
 } 
+document.getElementById("resetPwd").addEventListener('click',initiatePasswordReset);
+function initiatePasswordReset(){
+    document.getElementById("modal1").style.display='block';    
+}
+document.getElementById("resetButtonNext").addEventListener('click',sendPwdResetRequest);
+function sendPwdResetRequest(){
+    const id = document.getElementById("idNumberInp").value;
+    if(id.length != 0) {
+        const xhr = new XMLHttpRequest();
+        let requestUrl = 'http://127.0.0.1:8080/client/requestPassReset?id='+id;
+        xhr.open('GET',requestUrl)
+        xhr.responseType = 'json'
+        xhr.onload = () => {
+            document.getElementById("mailText").style.display ='block';
+        }
+        xhr.send()
+    }else{
+        document.getElementById("idNumberInp").style.borderColor = 'red';
+    }
+}
+document.getElementById("closeButton1").addEventListener('click',closeModal1);
+function closeModal1(){
+    document.getElementById("modal1").style.display='none'
+}
+
 
 document.getElementById("closeButton").addEventListener('click', closeModal);
 function closeModal(){

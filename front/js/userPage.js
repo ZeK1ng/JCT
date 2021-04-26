@@ -3,9 +3,23 @@ setupPage();
 let myItems=null;
 async function loadWindow(){
     window.onload = function(){
+        getUserInfo();
         showData();
     }
    
+}
+function getUserInfo(){
+    const params = new URLSearchParams(window.location.search);
+    const id = params.get("id");
+    const xhr = new XMLHttpRequest();
+
+    xhr.open('GET','http://127.0.0.1:8080/client/info?id='+id);
+    xhr.responseType = 'json'
+    xhr.onload = () =>{
+        const data = xhr.response;
+        document.getElementById("userName").innerHTML = data.firstName+" "+data.lastName;
+    }
+    xhr.send();
 }
 function showData(){
     const xhr = new XMLHttpRequest();
@@ -14,7 +28,6 @@ function showData(){
 
     xhr.onload = () => {
         const data = xhr.response;
-        console.log(data)
         document.getElementById("items").innerHTML = "";
         for(let i = 0; i< data.length; i++ ){
             let item = data[i];
@@ -30,7 +43,7 @@ function showData(){
             div.appendChild(name);
             const price = document.createElement("span");
             price.className ="item-price";
-            price.innerHTML=item.price;
+            price.innerHTML=item.price+" ₾";
             div.appendChild(price);
             const popupOpener = document.createElement("input");
             popupOpener.className = "button";
@@ -62,15 +75,17 @@ function initiateItemBuy(){
    
     let itemId=  document.getElementById("buybutton").getAttribute('itemId');
     let itemAmount = document.getElementById("amountInput").value;
-    const xhr = new XMLHttpRequest();
-    let requestUrl = 'http://127.0.0.1:8080/item/sellItem?id='+itemId +"&amount="+itemAmount;
-    xhr.open('POST',requestUrl)
-    xhr.responseType = 'json'
-    xhr.onload = () => {
-        showData();
-        closeModal();
+    if(itemAmount.length!=""){
+        const xhr = new XMLHttpRequest();
+        let requestUrl = 'http://127.0.0.1:8080/item/sellItem?id='+itemId +"&amount="+itemAmount;
+        xhr.open('POST',requestUrl)
+        xhr.responseType = 'json'
+        xhr.onload = () => {
+            showData();
+            closeModal();
+        }
+        xhr.send()
     }
-    xhr.send()
     console.log(itemId,itemAmount);
 } 
 

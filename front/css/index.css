@@ -8,19 +8,36 @@
     justify-content: center;
     flex-direction: column;
 }
+.Products{
+    margin-top: 50px;
+}
 .items{
     display: flex;
     flex-direction: column;
     justify-content: center;
     margin-top: 100px;
+    background-color: #f2682b;
+    max-width: 400px;
 }
+.mailText{
+    display: none;
+    margin-top: 10px;
+    font-size: 18px;
+    color: orange;
+}
+
 .loginform{
     max-width: 100px;
 }
 .lButton{
     margin-top: 10px;
+    width: 100%;
+    max-width: 256px;
 }
 .linput{
+    margin-top: 10px;
+}
+.button{
     margin-top: 10px;
 }
 .item-wrapper{
@@ -33,13 +50,19 @@
 .modcont{
     display: flex;
     flex-direction: column;
-    
+    justify-content: center;
+    align-items: center;
 }
 .minput{
     margin-top: 10px;
+    max-width: 156px;
+    width: 100%;
+
 }
 .mbutton{
     margin-top: 10px;
+    width: 100%;
+    max-width: 156px;
 }
 .modal {
     display: none; /* Hidden by default */
@@ -47,7 +70,7 @@
     z-index: 1; /* Sit on top */
     left: 30%;
     top: 30%;
-    max-width: 200px;
+    max-width: 400px;
     max-height: 200px;
     width: 100%; /* Full width */
     height: 100%; /* Full height */
@@ -67,7 +90,7 @@
   
   /* The Close Button */
   .close {
-    color: #aaa;
+    color:red;
     float: right;
     font-size: 28px;
     font-weight: bold;
